@@ -1,0 +1,15 @@
+version: '2.2'
+networks:
+  download:
+    driver: bridge
+services:
+  download:
+    image: dockerhub.cyai.com/public/download-server:1.0.0
+    container_name: download
+    restart: always
+    volumes:
+      - ./download_file:/home/download_file/
+    ports:
+      - 9201:8080
+    networks:
+      - download

@@ -1,0 +1,33 @@
+version: '3'
+services:
+  ui:
+    container_name: chartmuseumui
+    image: idobry/chartmuseumui:0.0.7
+    restart: always
+    environment:
+      CHART_MUSESUM_URL: "http://10.6.32.4:8080"
+    ports:
+      - 7001:8080
+    networks:
+      - rancher
+  chartmuseum:
+    container_name: chartmuseum
+    image: chartmuseum/chartmuseum:v0.9.0
+    environment:
+      PORT: 8080
+      DEBUG: 1
+      STORAGE: local
+      STORAGE_LOCAL_ROOTDIR: '/charts'
+      ALLOW_OVERWRITE: 'true'
+      CHART_URL: 'http://10.6.32.4:8080'
+      DISABLE_STATEFILES: 'true'
+    volumes:
+      - /root/chartmuseum/charts:/charts
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - rancher
+networks:
+  chartmuseum:
+    driver: bridge

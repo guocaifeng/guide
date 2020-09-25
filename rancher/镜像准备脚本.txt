@@ -1,0 +1,201 @@
+docker pull rancher/calico-cni:v3.7.4
+docker pull rancher/calico-cni:v3.8.1
+docker pull rancher/calico-ctl:v2.0.0
+docker pull rancher/calico-kube-controllers:v3.7.4
+docker pull rancher/calico-kube-controllers:v3.8.1
+docker pull rancher/calico-node:v3.7.4
+docker pull rancher/calico-node:v3.8.1
+docker pull rancher/calico-pod2daemon-flexvol:v3.8.1
+docker pull rancher/cluster-proportional-autoscaler:1.7.1
+docker pull rancher/configmap-reload:v0.3.0-rancher2
+docker pull rancher/coredns-coredns:1.3.1
+docker pull rancher/coredns-coredns:1.6.2
+docker pull rancher/coreos-configmap-reload:v0.0.1
+docker pull rancher/coreos-etcd:v3.3.10-rancher1
+docker pull rancher/coreos-etcd:v3.3.15-rancher1
+docker pull rancher/coreos-flannel:v0.11.0
+docker pull rancher/coreos-flannel:v0.11.0-rancher1
+docker pull rancher/coreos-kube-state-metrics:v1.8.0
+docker pull rancher/coreos-prometheus-config-reloader:v0.32.0
+docker pull rancher/coreos-prometheus-operator:v0.32.0
+docker pull rancher/flannel-cni:v0.3.0-rancher5
+docker pull rancher/fluentd:v0.1.17
+docker pull rancher/grafana-grafana:6.3.6
+docker pull rancher/hyperkube:v1.15.6-rancher1
+docker pull rancher/hyperkube:v1.16.2-rancher1
+docker pull rancher/hyperkube:v1.16.3-rancher1
+docker pull rancher/istio-kubectl:1.1.5
+docker pull rancher/istio-kubectl:1.3.3
+docker pull rancher/kube-api-auth:v0.1.3
+docker pull rancher/kubernetes-external-dns:v0.5.11
+docker pull rancher/log-aggregator:v0.1.6
+docker pull rancher/metrics-server:v0.3.3
+docker pull rancher/metrics-server:v0.3.4
+docker pull rancher/nginx-ingress-controller-defaultbackend:1.5-rancher1
+docker pull rancher/nginx-ingress-controller:nginx-0.25.1-rancher1
+docker pull rancher/nginx:1.17.4-alpine
+docker pull rancher/pause:3.1
+docker pull rancher/pipeline-jenkins-server:v0.1.4
+docker pull rancher/pipeline-tools:v0.1.14
+docker pull rancher/prom-alertmanager:v0.17.0
+docker pull rancher/prom-node-exporter:v0.17.0
+docker pull rancher/prom-prometheus:v2.11.1
+docker pull rancher/prometheus-auth:v0.2.0
+docker pull rancher/pstauffer-curl:v1.0.3
+docker pull rancher/rancher-agent:v2.3.3
+docker pull rancher/rancher:v2.3.3
+docker pull rancher/rke-tools:v0.1.51
+docker pull rancher/security-scan:v0.1.2
+
+
+docker tag rancher/rancher-agent:v2.3.3 dockerhub.cyai.com/rancher/rancher-agent:v2.3.3
+docker tag rancher/security-scan:v0.1.2 dockerhub.cyai.com/rancher/security-scan:v0.1.2
+docker tag rancher/hyperkube:v1.15.6-rancher1 dockerhub.cyai.com/rancher/hyperkube:v1.15.6-rancher1 
+docker tag rancher/hyperkube:v1.16.3-rancher1 dockerhub.cyai.com/rancher/hyperkube:v1.16.3-rancher1
+docker tag rancher/rke-tools:v0.1.51 dockerhub.cyai.com/rancher/rke-tools:v0.1.51
+docker tag rancher/nginx:1.17.4-alpine dockerhub.cyai.com/rancher/nginx:1.17.4-alpine
+docker tag rancher/log-aggregator:v0.1.6 dockerhub.cyai.com/rancher/log-aggregator:v0.1.6
+docker tag rancher/hyperkube:v1.16.2-rancher1 dockerhub.cyai.com/rancher/hyperkube:v1.16.2-rancher1
+docker tag rancher/istio-kubectl:1.3.3 dockerhub.cyai.com/rancher/istio-kubectl:1.3.3
+docker tag rancher/coreos-kube-state-metrics:v1.8.0 dockerhub.cyai.com/rancher/coreos-kube-state-metrics:v1.8.0
+docker tag rancher/grafana-grafana:6.3.6 dockerhub.cyai.com/rancher/grafana-grafana:6.3.6
+docker tag rancher/fluentd:v0.1.17 dockerhub.cyai.com/rancher/grafana-grafana:6.3.6
+docker tag rancher/metrics-server:v0.3.4 dockerhub.cyai.com/rancher/metrics-server:v0.3.4
+docker tag rancher/coreos-prometheus-config-reloader:v0.32.0 dockerhub.cyai.com/rancher/coreos-prometheus-config-reloader:v0.32.0
+docker tag rancher/coreos-prometheus-operator:v0.32.0 dockerhub.cyai.com/rancher/coreos-prometheus-config-reloader:v0.32.0
+docker tag rancher/pipeline-jenkins-server:v0.1.4 dockerhub.cyai.com/rancher/pipeline-jenkins-server:v0.1.4
+docker tag rancher/configmap-reload:v0.3.0-rancher2 dockerhub.cyai.com/rancher/configmap-reload:v0.3.0-rancher2
+docker tag rancher/cluster-proportional-autoscaler:1.7.1 dockerhub.cyai.com/rancher/cluster-proportional-autoscaler:1.7.1
+docker tag rancher/flannel-cni:v0.3.0-rancher5 dockerhub.cyai.com/rancher/flannel-cni:v0.3.0-rancher5
+docker tag rancher/coreos-etcd:v3.3.15-rancher1 dockerhub.cyai.com/rancher/coreos-etcd:v3.3.15-rancher1
+docker tag rancher/nginx-ingress-controller:nginx-0.25.1-rancher1 dockerhub.cyai.com/rancher/nginx-ingress-controller:nginx-0.25.1-rancher1
+docker tag rancher/coredns-coredns:1.6.2 dockerhub.cyai.com/rancher/coredns-coredns:1.6.2
+docker tag rancher/calico-node:v3.8.1 dockerhub.cyai.com/rancher/calico-node:v3.8.1
+docker tag rancher/calico-pod2daemon-flexvol:v3.8.1 dockerhub.cyai.com/rancher/calico-pod2daemon-flexvol:v3.8.1
+docker tag rancher/calico-cni:v3.8.1 dockerhub.cyai.com/rancher/calico-cni:v3.8.1
+docker tag rancher/calico-kube-controllers:v3.8.1 dockerhub.cyai.com/rancher/calico-cni:v3.8.1
+docker tag rancher/prom-prometheus:v2.11.1 dockerhub.cyai.com/rancher/prom-prometheus:v2.11.1
+docker tag rancher/calico-node:v3.7.4 dockerhub.cyai.com/rancher/calico-node:v3.7.4
+docker tag rancher/calico-cni:v3.7.4 dockerhub.cyai.com/rancher/calico-cni:v3.7.4
+docker tag rancher/calico-kube-controllers:v3.7.4 dockerhub.cyai.com/rancher/calico-kube-controllers:v3.7.4
+docker tag rancher/prom-alertmanager:v0.17.0 dockerhub.cyai.com/rancher/prom-alertmanager:v0.17.0
+docker tag rancher/metrics-server:v0.3.3 dockerhub.cyai.com/rancher/metrics-server:v0.3.3
+docker tag rancher/istio-kubectl:1.1.5 dockerhub.cyai.com/rancher/istio-kubectl:1.1.5
+docker tag rancher/kube-api-auth:v0.1.3 dockerhub.cyai.com/rancher/kube-api-auth:v0.1.3
+docker tag rancher/kubernetes-external-dns:v0.5.11 dockerhub.cyai.com/rancher/kubernetes-external-dns:v0.5.11
+docker tag rancher/prometheus-auth:v0.2.0 dockerhub.cyai.com/rancher/prometheus-auth:v0.2.0
+docker tag rancher/coreos-flannel:v0.11.0 dockerhub.cyai.com/rancher/coreos-flannel:v0.11.0
+docker tag rancher/coreos-flannel:v0.11.0-rancher1 dockerhub.cyai.com/rancher/coreos-flannel:v0.11.0-rancher1
+docker tag rancher/coredns-coredns:1.3.1 dockerhub.cyai.com/rancher/coredns-coredns:1.3.1
+docker tag rancher/coreos-kube-state-metrics:v1.5.0 dockerhub.cyai.com/rancher/coreos-kube-state-metrics:v1.5.0
+docker tag rancher/prom-node-exporter:v0.17.0 dockerhub.cyai.com/rancher/prom-node-exporter:v0.17.0
+docker tag rancher/coreos-etcd:v3.3.10-rancher1 dockerhub.cyai.com/rancher/coreos-etcd:v3.3.10-rancher1
+docker tag rancher/cluster-proportional-autoscaler:1.3.0 dockerhub.cyai.com/rancher/cluster-proportional-autoscaler:1.3.0
+docker tag rancher/nginx-ingress-controller-defaultbackend:1.5-rancher1 dockerhub.cyai.com/rancher/nginx-ingress-controller-defaultbackend:1.5-rancher1
+docker tag rancher/pstauffer-curl:v1.0.3 dockerhub.cyai.com/rancher/pstauffer-curl:v1.0.3
+docker tag rancher/calico-ctl:v2.0.0 dockerhub.cyai.com/rancher/calico-ctl:v2.0.0
+docker tag rancher/pause:3.1 dockerhub.cyai.com/rancher/pause:3.1
+docker tag rancher/coreos-configmap-reload:v0.0.1 dockerhub.cyai.com/rancher/coreos-configmap-reload:v0.0.1
+
+
+docker push dockerhub.cyai.com/rancher/rancher-agent:v2.3.3
+docker push dockerhub.cyai.com/rancher/security-scan:v0.1.2
+docker push dockerhub.cyai.com/rancher/hyperkube:v1.15.6-rancher1
+docker push dockerhub.cyai.com/rancher/hyperkube:v1.16.3-rancher1
+docker push dockerhub.cyai.com/rancher/rke-tools:v0.1.51
+docker push dockerhub.cyai.com/rancher/nginx:1.17.4-alpine
+docker push dockerhub.cyai.com/rancher/log-aggregator:v0.1.6
+docker push dockerhub.cyai.com/rancher/hyperkube:v1.16.2-rancher1
+docker push dockerhub.cyai.com/rancher/istio-kubectl:1.3.3
+docker push dockerhub.cyai.com/rancher/coreos-kube-state-metrics:v1.8.0
+docker push dockerhub.cyai.com/rancher/grafana-grafana:6.3.6
+docker push dockerhub.cyai.com/rancher/fluentd:v0.1.17
+docker push dockerhub.cyai.com/rancher/metrics-server:v0.3.4
+docker push dockerhub.cyai.com/rancher/coreos-prometheus-config-reloader:v0.32.0
+docker push dockerhub.cyai.com/rancher/coreos-prometheus-operator:v0.32.0
+docker push dockerhub.cyai.com/rancher/pipeline-jenkins-server:v0.1.4
+docker push dockerhub.cyai.com/rancher/configmap-reload:v0.3.0-rancher2
+docker push dockerhub.cyai.com/rancher/cluster-proportional-autoscaler:1.7.1
+docker push dockerhub.cyai.com/rancher/flannel-cni:v0.3.0-rancher5
+docker push dockerhub.cyai.com/rancher/coreos-etcd:v3.3.15-rancher1
+docker push dockerhub.cyai.com/rancher/nginx-ingress-controller:nginx-0.25.1-rancher1
+docker push dockerhub.cyai.com/rancher/coredns-coredns:1.6.2
+docker push dockerhub.cyai.com/rancher/calico-node:v3.8.1
+docker push dockerhub.cyai.com/rancher/calico-pod2daemon-flexvol:v3.8.1
+docker push dockerhub.cyai.com/rancher/calico-cni:v3.8.1
+docker push dockerhub.cyai.com/rancher/calico-kube-controllers:v3.8.1
+docker push dockerhub.cyai.com/rancher/prom-prometheus:v2.11.1
+docker push dockerhub.cyai.com/rancher/calico-node:v3.7.4
+docker push dockerhub.cyai.com/rancher/calico-cni:v3.7.4
+docker push dockerhub.cyai.com/rancher/calico-kube-controllers:v3.7.4
+docker push dockerhub.cyai.com/rancher/prom-alertmanager:v0.17.0
+docker push dockerhub.cyai.com/rancher/metrics-server:v0.3.3
+docker push dockerhub.cyai.com/rancher/istio-kubectl:1.1.5
+docker push dockerhub.cyai.com/rancher/kube-api-auth:v0.1.3
+docker push dockerhub.cyai.com/rancher/kubernetes-external-dns:v0.5.11
+docker push dockerhub.cyai.com/rancher/prometheus-auth:v0.2.0
+docker push dockerhub.cyai.com/rancher/coreos-flannel:v0.11.0
+docker push dockerhub.cyai.com/rancher/coreos-flannel:v0.11.0-rancher1
+docker push dockerhub.cyai.com/rancher/coredns-coredns:1.3.1
+docker push dockerhub.cyai.com/rancher/coreos-kube-state-metrics:v1.5.0
+docker push dockerhub.cyai.com/rancher/prom-node-exporter:v0.17.0
+docker push dockerhub.cyai.com/rancher/coreos-etcd:v3.3.10-rancher1
+docker push dockerhub.cyai.com/rancher/cluster-proportional-autoscaler:1.3.0
+docker push dockerhub.cyai.com/rancher/nginx-ingress-controller-defaultbackend:1.5-rancher1
+docker push dockerhub.cyai.com/rancher/pstauffer-curl:v1.0.3
+docker push dockerhub.cyai.com/rancher/calico-ctl:v2.0.0
+docker push dockerhub.cyai.com/rancher/pause:3.1
+docker push dockerhub.cyai.com/rancher/coreos-configmap-reload:v0.0.1
+
+
+docker pull dockerhub.cyai.com/rancher/rancher-agent:v2.3.3
+docker pull dockerhub.cyai.com/rancher/security-scan:v0.1.2
+docker pull dockerhub.cyai.com/rancher/hyperkube:v1.15.6-rancher1
+docker pull dockerhub.cyai.com/rancher/hyperkube:v1.16.3-rancher1
+docker pull dockerhub.cyai.com/rancher/rke-tools:v0.1.51
+docker pull dockerhub.cyai.com/rancher/nginx:1.17.4-alpine
+docker pull dockerhub.cyai.com/rancher/log-aggregator:v0.1.6
+docker pull dockerhub.cyai.com/rancher/hyperkube:v1.16.2-rancher1
+docker pull dockerhub.cyai.com/rancher/istio-kubectl:1.3.3
+docker pull dockerhub.cyai.com/rancher/coreos-kube-state-metrics:v1.8.0
+docker pull dockerhub.cyai.com/rancher/grafana-grafana:6.3.6
+docker pull dockerhub.cyai.com/rancher/fluentd:v0.1.17
+docker pull dockerhub.cyai.com/rancher/metrics-server:v0.3.4
+docker pull dockerhub.cyai.com/rancher/coreos-prometheus-config-reloader:v0.32.0
+docker pull dockerhub.cyai.com/rancher/coreos-prometheus-operator:v0.32.0
+docker pull dockerhub.cyai.com/rancher/pipeline-jenkins-server:v0.1.4
+docker pull dockerhub.cyai.com/rancher/configmap-reload:v0.3.0-rancher2
+docker pull dockerhub.cyai.com/rancher/cluster-proportional-autoscaler:1.7.1
+docker pull dockerhub.cyai.com/rancher/flannel-cni:v0.3.0-rancher5
+docker pull dockerhub.cyai.com/rancher/coreos-etcd:v3.3.15-rancher1
+docker pull dockerhub.cyai.com/rancher/nginx-ingress-controller:nginx-0.25.1-rancher1
+docker pull dockerhub.cyai.com/rancher/coredns-coredns:1.6.2
+docker pull dockerhub.cyai.com/rancher/calico-node:v3.8.1
+docker pull dockerhub.cyai.com/rancher/calico-pod2daemon-flexvol:v3.8.1
+docker pull dockerhub.cyai.com/rancher/calico-cni:v3.8.1
+docker pull dockerhub.cyai.com/rancher/calico-kube-controllers:v3.8.1
+docker pull dockerhub.cyai.com/rancher/prom-prometheus:v2.11.1
+docker pull dockerhub.cyai.com/rancher/calico-node:v3.7.4
+docker pull dockerhub.cyai.com/rancher/calico-cni:v3.7.4
+docker pull dockerhub.cyai.com/rancher/calico-kube-controllers:v3.7.4
+docker pull dockerhub.cyai.com/rancher/prom-alertmanager:v0.17.0
+docker pull dockerhub.cyai.com/rancher/metrics-server:v0.3.3
+docker pull dockerhub.cyai.com/rancher/istio-kubectl:1.1.5
+docker pull dockerhub.cyai.com/rancher/kube-api-auth:v0.1.3
+docker pull dockerhub.cyai.com/rancher/kubernetes-external-dns:v0.5.11
+docker pull dockerhub.cyai.com/rancher/prometheus-auth:v0.2.0
+docker pull dockerhub.cyai.com/rancher/coreos-flannel:v0.11.0
+docker pull dockerhub.cyai.com/rancher/coreos-flannel:v0.11.0-rancher1
+docker pull dockerhub.cyai.com/rancher/coredns-coredns:1.3.1
+docker pull dockerhub.cyai.com/rancher/coreos-kube-state-metrics:v1.5.0
+docker pull dockerhub.cyai.com/rancher/prom-node-exporter:v0.17.0
+docker pull dockerhub.cyai.com/rancher/coreos-etcd:v3.3.10-rancher1
+docker pull dockerhub.cyai.com/rancher/cluster-proportional-autoscaler:1.3.0
+docker pull dockerhub.cyai.com/rancher/nginx-ingress-controller-defaultbackend:1.5-rancher1
+docker pull dockerhub.cyai.com/rancher/pstauffer-curl:v1.0.3
+docker pull dockerhub.cyai.com/rancher/calico-ctl:v2.0.0
+docker pull dockerhub.cyai.com/rancher/pause:3.1
+docker pull dockerhub.cyai.com/rancher/coreos-configmap-reload:v0.0.1
+
+
+docker save $(docker images | grep rancher | awk 'BEGIN{OFS=":";ORS=" "}{print $1,$2}') -o paas-all-images.tar.gz

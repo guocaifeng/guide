@@ -1,0 +1,1 @@
+docker run --init jenkins/jnlp-slave:3.26-1 -url http://10.6.32.4:8080 -workDir=/var/jenkins/data 06b29f9fd9abe3d92c3e5cec200c63255d75202ffa754e560c4f9611ce6f92e3 dev

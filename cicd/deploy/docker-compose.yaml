@@ -1,0 +1,28 @@
+version: '2.2'
+networks:
+  jenkins-net:
+    driver: bridge
+services:
+  jenkins:
+    image: dockerhub.cyai.com/public/jenkins-docker:2.220-3
+    container_name: jenkins
+    restart: always
+    user: root
+    hostname: jenkins
+    environment:
+      - JAVA_OPTS=-Duser.timezone=Asia/Shanghai
+      - PAAS_URL=https://paas.cyai.com/v3
+      - PAAS_TOKEN=token-9pgjk:h4927mttc295gqd2pjxlj5l9brb9z48zld8lxp6458jc5thh5wth6n
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - /root/jenkins/cicd/app/data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8080:8080
+      - 50000:50000
+    networks:
+      - jenkins-net
+    extra_hosts:
+      - "dockerhub.cyai.com:10.6.33.5"
+      - "gitlab.cyai.com:10.6.0.11"
+      - "paas.cyai.com:10.5.1.121"

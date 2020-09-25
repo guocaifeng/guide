@@ -1,0 +1,18 @@
+version: '2.3'
+services:
+  harbor-clear:
+    image: dockerhub.cyai.com/public/harbor-clear:1.0.0
+    container_name: harbor-clear
+    restart: always
+    environment:
+      - API_URL=http://dockerhub.cyai.com/api
+      - USERNAME=admin
+      - PASSWORD=admin
+      - EXCLUDE=['public', 'rabbitmq', 'ntp', 'elk', 'rancher', 'platform-service']
+      - KEEP_NUM=100
+      - TIME=604800
+    networks:
+      - harbor-clear
+networks:
+  harbor-clear:
+    external: false

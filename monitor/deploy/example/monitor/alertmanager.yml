@@ -1,0 +1,26 @@
+# 全局配置
+global:
+  resolve_timeout: 5m #处理超时，默认5m
+
+# 是否存在模板
+templates:
+  - '/etc/alertmanager/*.tmpl' #模板文件
+
+# 消息进行路由转发
+route:
+  repeat_interval: 2h          #报警成功后，如果下次还有次报警，那么2小时后再次通知
+  receiver: 'webhook' #优先匹配子路由,子路由未找到信息，那么才使用此处的接收者
+
+# 告警消息接收者
+receivers:
+- name: 'webhook'
+  webhook_configs:
+  - url: 'http://10.5.1.16:9102'
+
+# 告警抑制：如果告警名称一样，那么高等级发送消息后，低等级不发送消息了
+inhibit_rules:
+  - target_match:         # 被抑制的对象
+      severity: Warning
+    source_match:         # 当此告警发生，其他的告警被抑制
+      severity: Critical
+    equal: ['alertname']

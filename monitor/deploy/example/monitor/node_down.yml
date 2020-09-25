@@ -1,0 +1,167 @@
+groups:
+- name: Node #定义规则组
+  rules:
+  - alert: "节点状态" #报警名称
+    expr: up{job="node-export"} == 0 #触发规则表达式
+    for: 30s  #持续时间 1分钟 1s 1h 1m
+    labels: #定义报警主机和级别
+      Node: instance
+      severity: Critical
+    annotations:
+      summary: "服务器故障"
+      description: "当前服务器可能已经宕机,请及时排查问题"
+      value: "{{ $value }}"
+- name: Host
+  rules:
+  - alert: "主机内存"
+    expr: (100-(node_memory_MemAvailable_bytes  / node_memory_MemTotal_bytes) * 100) > 85
+    for: 5m
+    labels:
+      Memory: memory
+      severity: Critical
+    annotations:
+      summary: "主机内存使用率"
+      description: "当前服务器的内存使用率，持续5分钟，超过70%"
+      value: "{{ $value }}"
+  - alert: "主机内存"
+    expr: 85 > (100-(node_memory_MemAvailable_bytes  / node_memory_MemTotal_bytes) * 100) > 70
+    for: 5m
+    labels:
+      Memory: memory
+      severity: Warning
+    annotations:
+      summary: "主机内存使用率"
+      description: "当前服务器的内存使用率，持续5分钟，超过70%"
+      value: "{{ $value }}"
+  - alert: "主机CPU"
+    expr: 100 * (1 - avg(irate(node_cpu_seconds_total{mode='idle'}[2m])) by (instance,job)) > 90
+    for: 5m
+    labels:
+      Cpu: cpu
+      severity: Critical
+    annotations:
+      summary: "主机CPU使用率"
+      description: "当前服务器的CPU使用率，持续5分钟，超过90%"
+      value: "{{ $value }}"
+  - alert: "主机CPU"
+    expr: 90 > (100 * (1 - avg(irate(node_cpu_seconds_total{mode='idle'}[2m])) by (instance,job))) > 70
+    for: 5m
+    labels:
+      Cpu: cpu
+      severity: Warning
+    annotations:
+      summary: "主机CPU使用率"
+      description: "当前服务器的CPU使用率，持续5分钟，超70%"
+      value: "{{ $value }}"
+  - alert: "主机负载"
+    expr: node_load5 > 10
+    for: 5m
+    labels:
+      Load5: Load5
+      severity: Critical
+    annotations:
+      summary: "主机5分钟负载"
+      description: "主机5分钟负载，平均值超过10"
+      value: "{{ $value }}"
+  - alert: "主机负载"
+    expr: 10 > node_load5 > 6
+    for: 5m
+    labels:
+      Load5: Load5
+      severity: Warning
+    annotations:
+      summary: "主机5分钟负载"
+      description: "主机5分钟负载，平均值超过6"
+      value: "{{ $value }}"
+  - alert: "磁盘空间"
+    expr: ceil( avg(((node_filesystem_size_bytes - node_filesystem_avail_bytes)/node_filesystem_size_bytes) * 100 > 90) by (instance))
+    for: 1m
+    labels:
+      Disk: Disk
+      severity: Warning
+    annotations:
+      summary: "磁盘使用率"
+      description: "主机磁盘使用超过90%"
+      value: "{{ $value }}%"
+  - alert: "磁盘读iops"
+    expr: irate(node_disk_reads_completed_total{job="node-export"}[5m]) > 450
+    for: 5m
+    labels:
+      DiskioRead: DiskioRead
+      severity: Critical
+    annotations:
+      summary: "磁盘IO负载情况"
+      description: "主机磁盘读IO负载较高，已经超过50."
+      value: "{{ $value }}iops"
+  - alert: "磁盘读iops"
+    expr: 450 > irate(node_disk_reads_completed_total{job="node-export"}[5m]) > 300
+    for: 5m
+    labels:
+      DiskioRead: DiskioRead
+      severity: Warning
+    annotations:
+      summary: "磁盘IO负载情况"
+      description: "主机磁盘读IO负载较高，已经超过20"
+      value: "{{ $value }}iops"
+  - alert: "磁盘写iops"
+    expr: irate(node_disk_writes_completed_total{job="node-export"}[5m]) > 450
+    for: 5m
+    labels:
+      DiskioWrite: DiskioWrite
+      severity: Critical
+    annotations:
+      summary: "磁盘IO负载情况"
+      description: "主机磁盘写IO负载较高，已经超过50"
+      value: "{{ $value }}iops"
+  - alert: "磁盘写iops"
+    expr: 450 > irate(node_disk_writes_completed_total{job="node-export"}[5m]) > 300
+    for: 5m
+    labels:
+      DiskioWrite: DiskioWrite
+      severity: Warning
+    annotations:
+      summary: "磁盘IO负载情况"
+      description: "主机磁盘写IO负载较高，已经超过20"
+      value: "{{ $value }}iops"
+  - alert: "接收流量"
+    expr: rate(node_network_receive_bytes_total{job="node-export"}[5m]) / 1048576  > 1
+    for: 5m
+    labels:
+      Network: Network_receive
+      severity: Warning
+    annotations:
+      summary: "网卡接收流量详情"
+      description: "主机 [{{ $labels.device }}] 网卡5分钟平均接收流量超过1Mbps."
+      value: "{{ $value }}Mbps"
+  - alert: "发送流量"
+    expr: rate(node_network_transmit_bytes_total{job="node-export"}[5m]) / 1048576  > 1
+    for: 5m
+    labels:
+      Network: Network_transmit
+      severity: Warning
+    annotations:
+      summary: "网卡发送流量详情"
+      description: "主机 [{{ $labels.device }}] 网卡5分钟内平均发送流量超过1Mbps."
+      value: "{{ $value }}Mbps"
+#- name: Container
+#  rules:
+#  - alert: "容器CPU"
+#    expr: (sum by(name,instance) (rate(container_cpu_usage_seconds_total{image!=""}[5m]))*100) > 60
+#    for: 1m
+#    labels:
+#      name: CPU
+#      severity: Warning
+#    annotations:
+#      summary: "容器CPU使用率"
+#      description: " 容器CPU使用超过60%."
+#      value: "{{ $value }}%"
+#  - alert: "容器Memory"
+#    expr:  sum(container_memory_rss{name=~".+",image!=""}) by (name) / 1048576 > 1024
+#    for: 1m
+#    labels:
+#      name: Memory
+#      severity: Warning
+#    annotations:
+#      summary: "容器内存使用流程"
+#      description: " 容器内存使用超过1GB."
+#      value: "{{ $value }}G"

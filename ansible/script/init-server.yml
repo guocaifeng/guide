@@ -1,0 +1,125 @@
+---
+- hosts: all
+  remote_user: root
+  vars:
+    rancher_user: rancher
+    rancher_password: rancher
+    docker_version: 18.06.3
+  tasks:
+    - name: python3.6 is installed ?
+      shell: python --version | awk '{print $2}'|cut -b 1-3
+      register: installed_python
+    - name: install python3.6
+      shell: apt install -y python3.6
+      become: yes
+      when:
+        - installed_python.stdout != "3.6"
+    - name: set default python3.6
+      shell: mv /usr/bin/python /usr/bin/python.bak && ln -s /usr/bin/python3.6 /usr/bin/python
+      become: yes
+    - name: change name
+      shell: hostnamectl --static set-hostname {{hostname}} && hostname
+      become: yes
+    - name: backup sources.list
+      shell: cp /etc/apt/sources.list /etc/apt/sources.list.bak
+      become: yes
+    - name: upgrade sources
+      shell:
+        cmd: |
+          sudo cat > /etc/apt/sources.list << EOF
+          deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+          deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+          deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+          deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+          deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+          deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+          deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+          deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+          deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+          deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+          EOF
+      become: yes
+#    这里有问题
+#    - name: docker 18.06 is installed ?
+#      shell: docker --version | awk '{print $3}'|cut -b 1-5
+#      register: installed_docker
+#    - name: install docker
+#      when:
+#        - installed_docker.stdout != "18.06"
+#      shell:
+#        cmd: |
+#          apt-get remove docker docker-engine docker.io containerd runc -y \
+#          && apt-get update \
+#          && apt-get -y install apt-transport-https ca-certificates curl software-properties-common bash-completion gnupg-agent expect \
+#          && curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | apt-key add - \
+#          && add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable" \
+#          && apt-get -y update \
+#          && version=$(apt-cache madison docker-ce|grep {{docker_version}}|awk '{print $3}') \
+#          && apt-get -y install docker-ce=${version} --allow-downgrades \
+#          && systemctl enable docker
+#      become: yes
+    - name: install docker
+      shell:
+        cmd: |
+          apt-get update \
+          && apt-get -y install apt-transport-https ca-certificates curl software-properties-common bash-completion gnupg-agent expect \
+          && curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | apt-key add - \
+          && add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable" \
+          && apt-get -y update \
+          && version=$(apt-cache madison docker-ce|grep {{docker_version}}|awk '{print $3}') \
+          && apt-get -y install docker-ce=${version} --allow-downgrades \
+          && systemctl enable docker
+      become: yes
+    - name: add user rancher and add docker group
+#      when:
+#        - installed_docker.stdout != "18.06"
+      user: shell=/bin/bash name={{rancher_user}} password={{rancher_password | password_hash('sha512') }} update_password=always group=docker append=yes
+      become: yes
+    - name: add sudo for rancher
+#      when:
+#        - installed_docker.stdout != "18.06"
+      shell: echo "rancher  ALL=(ALL:ALL) ALL" >> /etc/sudoers
+      become: yes
+    - name: upgrade daemon.json
+#      when:
+#        - installed_docker.stdout != "18.06"
+      args:
+        warn: false
+      shell:
+        cmd: |
+          touch /etc/docker/daemon.json \
+          && sudo cat > /etc/docker/daemon.json << EOF
+          {
+            "insecure-registries":["registry.cyai.com","dockerhub.cyai.com"]
+          }
+          EOF
+      become: yes
+    - name: restart docker
+#      when:
+#        - installed_docker.stdout != "18.06"
+      shell: systemctl restart docker
+      become: yes
+    - name: copy docker-compose
+      copy:
+        src: ./docker-compose
+        dest: /usr/bin/
+        owner: root
+        group: root
+        mode: preserve
+      become: yes
+    - name: copy kubectl
+      copy:
+        src: ./kubectl
+        dest: /usr/bin/
+        owner: root
+        group: root
+        mode: preserve
+      become: yes
+    - name: copy helm
+      copy:
+        src: ./helm
+        dest: /usr/bin/
+        owner: root
+        group: root
+        mode: preserve
+      become: yes

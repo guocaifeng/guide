@@ -1,0 +1,76 @@
+---
+- hosts: docker
+  remote_user: root
+  vars:
+    rancher_user: rancher
+    rancher_password: rancher
+    docker_version: 18.06.3
+  tasks:
+    - name: change name
+      shell: hostnamectl --static set-hostname {{hostname}} && hostname
+    - name: backup sources.list
+      shell: cp /etc/apt/sources.list /etc/apt/sources.list.bak
+    - name: upgrade sources
+      shell:
+        cmd: |
+          sudo cat > /etc/apt/sources.list << EOF
+          deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+          deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+          deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+          deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+          deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+          deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+          deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+          deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+          deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+          deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+          EOF
+    - name: install docker
+      shell:
+        cmd: |
+          apt-get update \
+          && apt-get -y install apt-transport-https ca-certificates curl software-properties-common bash-completion gnupg-agent expect \
+          && curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | apt-key add - \
+          && add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable" \
+          && apt-get -y update \
+          && version=$(apt-cache madison docker-ce|grep {{docker_version}}|awk '{print $3}') \
+          && apt-get -y install docker-ce=${version} --allow-downgrades \
+          && systemctl enable docker
+    - name: add user rancher and add docker group
+      user: shell=/bin/bash name={{rancher_user}} password={{rancher_password | password_hash('sha512') }} update_password=always group=docker append=yes
+    - name: add sudo for rancher
+      shell: echo "rancher  ALL=(ALL:ALL) ALL" >> /etc/sudoers
+    - name: upgrade daemon.json
+      args:
+        warn: false
+      shell:
+        cmd: |
+          touch /etc/docker/daemon.json \
+          && sudo cat > /etc/docker/daemon.json << EOF
+          {
+            "insecure-registries":["registry.cyai.com","dockerhub.cyai.com"]
+          }
+          EOF
+    - name: restart docker
+      shell: systemctl restart docker
+    - name: copy docker-compose
+      copy:
+        src: ./docker-compose
+        dest: /usr/bin/
+        owner: root
+        group: root
+        mode: preserve
+    - name: copy kubectl
+      copy:
+        src: ./kubectl
+        dest: /usr/bin/
+        owner: root
+        group: root
+        mode: preserve
+    - name: copy helm
+      copy:
+        src: ./helm
+        dest: /usr/bin/
+        owner: root
+        group: root
+        mode: preserve
