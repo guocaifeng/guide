@@ -18,7 +18,7 @@ nginx1 | 10.6.0.104 |  无
 nginx2 | 10.6.0.105 |  无
 
 # 2 应用架构
-![image](./keepalived+nginx.png)
+![image](keepalived+nginx.png)
 
 # 3 初始化服务器
 
@@ -190,6 +190,7 @@ router_id lvs1  lvs2
 priority 150  80
 
 ```
+cat > /etc/keepalived/keepalived.conf <<EOF
 global_defs {
     router_id lvs1
 }
@@ -241,11 +242,13 @@ virtual_server 10.6.0.103 8080 {
         }
     }
 }
+EOF
 
 ```
 
 ## 4.2 Slave配置
 ```
+cat > /etc/keepalived/keepalived.conf <<EOF
 global_defs {
 	router_id lvs2
 }
@@ -297,7 +300,7 @@ virtual_server 10.6.0.103 8080 {
         }
     }
 }
-
+EOF
 ```
 
 ## 4.3 重启并添加开机启动
