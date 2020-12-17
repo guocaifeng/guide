@@ -34,7 +34,7 @@ cat /etc/fstab_bak |grep -v swap > /etc/fstab
 cat /etc/fstab
 ```
 
-### 2.1.4 关闭防火墙(可选)
+### 2.1.4 关闭防火墙
 ufw disable
 
 ### 2.1.5 配置时区 语言
@@ -56,10 +56,18 @@ echo 'Asia/Shanghai' >/etc/timezone
 sudo echo 'LANG="en_US.UTF-8"' >> /etc/profile;source /etc/profile
 ```
 
-### 2.1.6 配置DNS(可选)
+### 2.1.6 配置DNS
 对于类似Ubuntu 18这类默认使用systemd-resolve管理DNS的系统，建议禁用systemd-resolved服务，然后手动配置DNS。
 
-#### (1)禁用systemd-resolved.service
+#### 2.1.6.1 方案一
+```shell
+sudo rm /etc/resolv.conf
+sudo ln -s /var/run/systemd/resolve/resolv.conf /etc/resolv.conf
+```
+
+#### 2.1.6.2 方案二
+
+##### (1)禁用systemd-resolved.service
 ```shell
 systemctl disable systemd-resolved.service
 systemctl stop systemd-resolved.service
@@ -67,7 +75,8 @@ rm -rf /etc/resolv.conf
 touch /etc/resolv.conf
 ```
 
-#### (2)接着编辑/etc/resolv.conf添加DNS服务器
+##### (2)接着编辑/etc/resolv.conf添加DNS服务器 (参考/var/run/systemd/resolve/resolv.conf)
+10.6.0.21  需要修改
 ```shell
 # 格式
 nameserver //定义DNS服务器的IP地址
@@ -82,7 +91,7 @@ nameserver 10.6.0.21
 nameserver 8.8.8.8
 ```
 
-#### (3)重启systemd-resolved.service
+##### (3)重启systemd-resolved.service
 ```shell
 systemctl enable systemd-resolved.service
 systemctl start systemd-resolved.service

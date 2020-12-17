@@ -61,7 +61,7 @@
 
 <table border="0">
     <tr>
-        <td><a href="ha-design/lvs-keepalived-nginx(web).md">基于lvs+keepalived+nginx主从高可用方案</a></td>
+        <td><a href="ha-design/Master-Slave/lvs-keepalived-nginx(web).md">基于lvs+keepalived+nginx主从高可用方案</a></td>
     </tr>
 </table>
 
